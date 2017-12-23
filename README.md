@@ -3,7 +3,12 @@ This is meant to make casting to your chromecast a little easier. It works with 
 instead of just casting your web browser tab. This means you can close the tab and the stream will continue to be visible on the chromecast.
 
 ## Install
-Installation is pretty simple, just copy the files to your webserver.
+Installation is pretty simple, just copy the files to your ssl enabled webserver.
+
+### SSL
+ZoneCaster must be served over SSL, which means the zoneminder api must be served over ssl as well.
+However the streams themselves are served to chromecast over regular http.
+
 
 ### Cross domain installs
 If ZoneMinder isn't installed on the same webserver then you will need to edit ZoneCaster.js and change
