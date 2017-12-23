@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ZoneCaster</title>
+<link rel="stylesheet" type="text/css" href="css/ZoneCaster.css" />
+</head>
+<body>
+    <div id="main_video">
+        <div class="blackbg" id="playerstatebg">IDLE</div>
+        <div class=label id="playerstate">IDLE</div>
+        <img id="video_image">
+        <div id="video_image_overlay"></div>
+        <video id="video_element"></video>
+    </div>
+    <div id="media_control">
+        <div id="play"></div>
+        <div id="pause"></div>
+        <div id="progress_bg"></div>
+        <div id="progress"></div>
+        <div id="progress_indicator"></div>
+        <div id="fullscreen_expand"></div>
+        <div id="fullscreen_collapse"></div>
+        <button is="google-cast-button" id="castbutton"></button>
+        <div id="audio_bg"></div>
+        <div id="audio_bg_track"></div>
+        <div id="audio_indicator"></div>
+        <div id="audio_bg_level"></div>
+        <div id="audio_on"></div>
+        <div id="audio_off"></div>
+        <div id="duration">00:00:00</div>
+    </div>
+    <div id="media_info">
+        <div id="media_title"></div>
+        <div id="media_subtitle"></div>
+        <div id="media_desc"></div>
+    </div>
+    <div id="carousel"></div>
+    <script src="ZoneCaster.js"></script>
+    <script type="text/javascript">
+        getJSON(zmServer +'/zm/api/monitors.json',
+            function(err, data) {
+                if (err !== null) {
+                    alert('Something went wrong: ' + err);
+                } else {
+                    var tmpObj = { };
+                    data.monitors.forEach(function(monitor) {
+                    monitor = monitor.Monitor;
+                    if (monitor.Function == 'None')
+                        return;
+                    tmpObj = { 'description' : monitor.Name,
+                        'sources' : [zmServer + '/cgi-bin/nph-zms?mode=jpeg&scale=100&maxfps=5&buffer=1000&monitor='  + monitor.Id],
+                        'subtitle' : '',
+                        'thumb' : zmServer + '/cgi-bin/nph-zms?mode=single&scale=50&monitor=' + monitor.Id,
+                        'title' : monitor.Name,
+                        'type'  : 'image/jpeg'
+                    };
+                    mediaJSON['monitors'].push(tmpObj);
+                });
+            }
+            var castPlayer = new CastPlayer();
+
+            window['__onGCastApiAvailable'] = function(isAvailable) {
+                if (isAvailable) {
+                    castPlayer.initializeCastPlayer();
+                    castPlayer.selectMedia(0);
+                }
+            };
+        });
+      </script>
+      <script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
+
+</body>
+</html>
