@@ -25,7 +25,7 @@
  * URL of ZoneMinder install
  * @string
  */
-var zmServer='http://' + window.location.hostname
+var zmServer='https://' + window.location.hostname
 
 /**
  * Width of progress bar in pixel
