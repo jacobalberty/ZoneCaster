@@ -43,16 +43,29 @@
                     alert('Something went wrong: ' + err);
                 } else {
                     var tmpObj = { };
+                    var mode;
+                    var type;
+                    switch (zmsType) {
+                        case 'webm':
+                            mode = 'mpeg&format=webm';
+                            type = 'video/webm';
+                            break;
+                        case 'jpeg':
+                        default:
+                            mode = 'jpeg';
+                            type = 'image/jpeg';
+
+                    }
                     data.monitors.forEach(function(monitor) {
                     monitor = monitor.Monitor;
                     if (monitor.Function == 'None')
                         return;
                     tmpObj = { 'description' : monitor.Name,
-                        'sources' : [zmServer + '/cgi-bin/nph-zms?mode=jpeg&scale=100&maxfps=5&buffer=1000&monitor='  + monitor.Id],
+                        'sources' : [zmServer + '/cgi-bin/nph-zms?mode=' + mode + '&scale=100&maxfps=5&buffer=1000&monitor='  + monitor.Id],
                         'subtitle' : '',
                         'thumb' : zmServer + '/cgi-bin/nph-zms?mode=single&scale=50&monitor=' + monitor.Id,
                         'title' : monitor.Name,
-                        'type'  : 'image/jpeg'
+                        'type'  : type
                     };
                     mediaJSON['monitors'].push(tmpObj);
                 });

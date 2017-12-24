@@ -28,6 +28,13 @@
 var zmServer='https://' + window.location.hostname
 
 /**
+ * Type of stream
+ * Options are jpeg or webm
+ * @string
+ */
+var zmsType = 'webm';
+
+/**
  * Width of progress bar in pixel
  * @const
  */
