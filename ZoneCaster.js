@@ -439,7 +439,6 @@ CastPlayer.prototype.setupRemotePlayer = function () {
     }.bind(this);
 
     playerTarget.load = function (mediaIndex) {
-        console.log('what the hell');
         console.log('Loading...' + this.mediaContents[mediaIndex]['title']);
         var mediaInfo = new chrome.cast.media.MediaInfo(
             this.mediaContents[mediaIndex]['sources'][0], this.mediaContents[mediaIndex]['type']);
